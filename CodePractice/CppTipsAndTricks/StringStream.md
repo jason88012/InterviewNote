@@ -47,3 +47,16 @@ go to google
 ```
 
 特別需要注意的是在分割字串的時候如果不特別指定分隔符的話，預設就是以一個空白字元做分割，但是在合併字串的時候沒有這個預設分隔符，所以空格要自己打進去。
+
+## Read / Write
+在[297. Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)中我們可以不把value的值轉成string,直接用stringstream的read/write去讀取int的binary資料，如此一來我們就省去了serialize時把int轉成string，deserialize時把string再轉回int的時間
+用法如下:
+```
+ostringstream oss;
+oss.write(char* ptr, int size);
+
+istringstream iss;
+oss.read(char* dest, int size);
+```
+
+如此我們整段string stream都是代表了數值，也省去了分割空格或`null`的空間
