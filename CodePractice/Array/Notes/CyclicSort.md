@@ -82,7 +82,8 @@ Output: 2
 CODE:
 ```cpp
     int firstMissingPositive(vector<int>& nums) {
-        int n = nums.size(), i = 0;
+        int n = nums.size();
+        int i = 0;
         while (i < n) {
             if (nums[i] <= 0 || nums[i] >= n || nums[i] == nums[nums[i] - 1]) {
                 i++;
@@ -90,12 +91,10 @@ CODE:
                 swap(nums[i], nums[nums[i] - 1]);
             }
         }
-
-        for (int i = 0; i < n; ++i) {
-            // nums now is 1-based sorted
-            if (i != nums[i-1])
-                return i+1;
+        for (int num = 1; num <= n; ++num) {
+            if (num != nums[num-1])
+                return num;
         }
-        return n+1;
+        return n + 1;
     }
 ```
