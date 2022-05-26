@@ -52,7 +52,7 @@ Explanation: The array can be partitioned as [1, 5, 5] and [11].
 
 到這裡已經很清楚數字之間的關係了，轉移方程式寫出來就像下面這樣:
 ```
-dp[i][num] = dp[i-1][num] || dp[i][num - nums[i]];
+dp[i][num] = dp[i-1][num] || dp[i-1][num - nums[i]];
 ```
 
 接下來我們再把它優化成1維矩陣
