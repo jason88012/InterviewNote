@@ -1,6 +1,6 @@
 # Sliding Window Template
 
-Sliding Windows通常用於一個/兩個字串/subarray的比對，通常是要找出string中是否有滿足某個條件的`substring`或`subarray`
+Sliding Windows通常用於一個/兩個字串/subarray的比對，通常是要找出string中是否有滿足某個條件的`substring`或`subarray`，或是找有幾個subarray符合題目條件。
 
 ## 經典例題:
 Find longest substring / subarray
@@ -14,6 +14,10 @@ Compare 2 string
 
 Fixed size sliding window
 - [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/)
+
+Find how many subarray meets the requirement
+- [713. Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)
+- [2444. Count Subarrays With Fixed Bounds](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/)
 
 
 
@@ -148,3 +152,25 @@ Fixed size sliding window
         return false;
     }
 ```
+
+## Count subarray meets requirement
+像這種類型的題目通常就是給你一個條件，並要你找出有幾個sub array滿足題目的條件，例如: 相乘不大於某個數字，相加不大於某個數字，最大最小值的範圍限制在x ~ y等等，這時我們要做的就是利用sliding window去找出滿足的subarray長度，再透過長度去計算總共有幾種可能，計算sub array數量的方法每題都不一樣，不過基本上有兩種概念:
+1. 最短符合長度的sub array長度是1 --> 計算方式就是每增加一個就多當前window長度的個數，例如:
+```
+[1,2,3,4] 符合條件，那要計算的可能性就有
+[1]
+[1,2] [2]
+[1,2,3] [2,3] [3]
+[1,2,3,4] [2,3,4] [3,4] [4]
+```
+所以就等同於: 1 + 2 + 3 + 4，實際上就是計算"若加入最新的這個數字會多幾種可能"
+
+2. 最短符合長度的sub array長度不只1 --> 計算方式就是先找出最短符合長度的sub array起始的index，每當右側長度增加，就增加左側長度個個數。例如:
+```
+[ j, ... lb-3, lb-2, lb-1, lb ... rb, rb+1, rb+2, rb+3 ..., k]
+最短符合條件的長度是arr[lb:rb]
+但在lb(left bound)之前又有一些數字也符合，假設長度是j
+這代表在rb(right bound)之後每增加一個數字，就會多j種可能(把left bound的數字逐一拔掉，共j種可能)
+```
+所以計算方法等同於: `for (i in range(rb+1, k)): res += j`
+實際上計算出來的結果等同於: `j * k`，也符合通常計算這種東西的原理
