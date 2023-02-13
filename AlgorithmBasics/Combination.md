@@ -124,9 +124,9 @@ private:
             return;
         }
         for (int i = start; i < nums.size(); ++i) {
-            // can't use same element, if the number to choose is same
-            // as previous, skip it.
-            if (i > 0 && nums[i] == nums[i-1])
+            // In same call stack (same position of the tmp array)
+            // don't use same number
+            if (i > start && nums[i] == nums[i-1])
                 continue;
             tmp.push_back(nums[i]);
             // can't use same element, pass i+1
